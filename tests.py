@@ -397,6 +397,142 @@ tests_model = {
             'Example': True
         }
    ],
+    'PhyloJiVE': [
+        {
+            'Title': 'dos this change Test the Spacetree with an infinite client-side generator.',
+            'Description': 
+            """
+             Testing the Spacetree with a client-side generator that returns a Tree of level = 3
+             when the controller request method is called.<br>
+             This should lead to an infinite Spacetree.<br>
+             Also, the edges should have arrow as style.<br>
+             The nodes belonging in the path between the clicked node and the root node are selected with a
+             different color.<br>
+             Clicking on a node should set focus to that node.<br>
+             This test uses the generator.js file to create random generated trees.
+            """,
+            'Extras': ['newicktoJSON.js', 'excanvas.js', 'jquery-1.6.4.min.js']
+        },
+        {
+            'Title': 'Test adding a subtree',
+            'Description': 
+            """
+            Loads a static Spacetree and should add a subtree when clicking on the add button.<br>
+            You can change the parameters for adding the subtree in the form.
+            """,
+            'Extras': ['generators.js', 'excanvas.js']
+        },
+        {
+            'Title': 'Test removing a subtree.',
+            'Description': 
+            """
+            Loads a static Spacetree and should remove a subtree when clicking on the remove button.<br>
+            You can change the parameters for removing the subtree in the form.
+            """,
+            'Extras': ['generators.js', 'excanvas.js']
+        },
+        {
+            'Title': 'Test unbalanced tree.',
+            'Description': 
+            """
+            Tests the Spacetree layout algorithm with an unbalanced tree. <br>
+            """,
+            'Extras': ['generators.js', 'excanvas.js']
+        },
+        {
+            'Title': 'Test Different node sizes',
+            'Description': 
+            """
+            Testing a static Spacetree with rectangle nodes with different widths and heights.<br>
+            You can also click on a node's name in the list to add focus to that node.
+            """,
+            'Extras': ['generators.js', 'excanvas.js']
+        },
+        {
+            'Title': 'Test Node types, Edge types, Animation types.',
+            'Description': 
+            """
+            Tests a static Spacetree with different node, edge and animation types that you can choose from
+            a form.
+            """,
+            'Extras': ['generators.js', 'excanvas.js']
+        },
+        {
+            'Title': 'Tree Animation',
+            'Description': 
+            """
+            A static JSON Tree structure is used as input for this animation.<br /><br />
+            <b>Click</b> on a node to select it.<br /><br />
+            You can <b>select the tree orientation</b> by changing the select box in the right column.<br /><br />
+            You can <b>change the selection mode</b> from <em>Normal</em> selection (i.e. center the selected node) to 
+            <em>Set as Root</em>.<br /><br />
+            <b>Drag and Drop the canvas</b> to do some panning.<br /><br />
+            Leaves color depend on the number of children they actually have.
+            """,
+            'Extras': ['excanvas.js'],
+            'Example': True
+        },
+        {
+            'Title': 'SpaceTree with on-demand nodes',
+            'Description': 
+            """
+            This example shows how you can use the <b>request</b> controller method to create a SpaceTree with <b>on demand</b> nodes<br /><br />
+            The basic JSON Tree structure is cloned and appended on demand on each node to create an <b>infinite large SpaceTree</b><br /><br />
+            You can select the <b>tree orientation</b> by changing the select box in the right column.
+            """,
+            'Extras': ['excanvas.js'],
+            'Example': True
+        },
+        {
+            'Title': 'Add/Remove Subtrees',
+            'Description': 
+            """
+            This example shows how to add/remove subtrees with the SpaceTree.<br /><br />
+            <b>Add</b> a subtree by clicking on the <em>Add</em> button located in the right column.<br /><br />
+            <b>Remove</b> a subtree by clicking on a red colored node
+            """,
+            'Extras': ['excanvas.js'],
+            'Example': True
+        },
+        {
+            'Title': 'MultiTree',
+            'Description': 
+            """
+            A static JSON Tree structure is used as input for this animation.<br /><br />
+            By setting the specific orientation for nodes we can create a multitree structure.<br /><br />
+            Nodes and Edges are styled with canvas specific styles like shadows.<br /><br />
+            <b>Click</b> on a node to select it.<br /><br />
+            You can <b>change the selection mode</b> from <em>Normal</em> selection (i.e. center the selected node) to 
+            <em>Set as Root</em>.
+            """,
+            'Extras': ['excanvas.js'],
+            'Example': True
+        },
+        {
+            'Title': 'loadJSON multiple times',
+            'Description': 
+            """
+            Testing if loading different JSON tree/graph structures affects how the SpaceTree is displayed.
+            """,
+            'Extras': ['excanvas.js', 'generators.js'],
+            'Example': False 
+        },
+        {
+            'Title': 'Style Animations',
+            'Description': 
+            """
+            This Advanced Example shows how Node, Edge, Label and Canvas specific style animations can be triggered for this 
+            visualization.<br /><br />
+            <b>Select</b> the styles to be animated in the right column and hit the <em>Morph Styles</em> button. This will 
+            set random values for these properties and animate them.<br /><br />
+            Click on <em>Restore Styles</em> to set the default styles.<br /><br />
+            Other styles like alpha and shadows can also be triggered.<br /><br />
+            This example also implements a custom node rendering function for Stroke + Fill rectangles.
+            """,
+            'Extras': ['excanvas.js'],
+            'Example': True
+        }
+   ],
    
     'Treemap': [
         {
@@ -741,19 +877,7 @@ tests_model = {
             """,
             'Extras': ['excanvas.js'],
             'Example': False
-        },
-        {
-            'Title': 'Area Chart Example overridden aggregate values and labels',
-            'Description': 
-            """
-            A static Area Chart example with gradients that displays tooltips when hovering the stacks.<br /><br />
-            Left-click a Stack to apply a filter to it.<br /><br />
-            Right-click to restore all stacks.<br /><br />
-            Click the Update button to update the JSON data.
-            """,
-            'Extras': ['excanvas.js'],
-            'Example': False
-        },
+        }
     ],
     
    'BarChart': [

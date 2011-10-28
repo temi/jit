@@ -58,6 +58,9 @@
     "Layouts.Tree": [
       "Layouts"
     ],
+    "Layouts.PhyloJiVE": [
+      "Layouts"
+    ],
     "Layouts.Radial": [
       "Layouts"
     ],
@@ -279,6 +282,32 @@
         "Graph.Geom",
         "Loader",
         "Layouts.Tree",
+        "Fx"
+    ],
+
+    "PhyloJiVE": [
+        "Core",
+        "Options.Canvas",
+        "Options.Tree",
+        "Options.Node",
+        "Options.Edge",
+        "Options.Fx",
+        "Options.Label",
+        "Options.Tips",
+        "Options.NodeStyles",
+        "Options.Events",
+        "Options.Navigation",
+        "Options.Controller",
+        "Extras",
+        "Canvas",
+        "Complex",
+        "Polar",
+        "Graph.Op",
+        "Graph.Plot",
+        "Graph.Label",
+        "Graph.Geom",
+        "Loader",
+        "Layouts.PhyloJiVE",
         "Fx"
     ],
 
