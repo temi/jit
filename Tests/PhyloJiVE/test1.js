@@ -38,6 +38,7 @@ var Nav = {
 function init(){
     //init data
     var json = Smits.getRoot().json();
+    var selectedClade;
     //end
     //init Spacetree
     //Create a new ST instance
@@ -68,12 +69,13 @@ function init(){
         //nodes or edges
         Node: {
             height: 40,
-            width: 60,
+            width: 20,
             type: 'circle',
 	    dim:10,
             color: '#aaa',
             overridable: true,
             align:'left'
+// 	    autoWidth:true
         },
 	Canvas: {
 		background:{
@@ -83,6 +85,7 @@ function init(){
         
         Edge: {
             type: 'line',
+	    color:'#000',
             overridable: true,
 	    lineWidth: 2
         },
@@ -102,24 +105,26 @@ function init(){
 // 	    }
 	      var leafs;
 	      if( node ){
+		selectedClade = [];
 		node.eachSubgraph(function (elem) {
 		  if(!elem.exist){
 		    elem.exist = true;
 		    elem.drawn = true;
-		    if( !elem.data.leaf ) {
+		  }
+		  if( !elem.data.leaf ) {
 // 		      st.labels.getLabel(elem.id).innerHTML = '';
 // 		      st.labels.getLabel(elem.id).style.display = 'none';
-		      elem.data.$alpha = 0.9;
-		      elem.data.$type = 'circle';
-		    } else {
-		      delete elem.data.$alpha;
-		      elem.data.$type = 'none';
+// 		    elem.data.$alpha = 0.9;
+		    elem.data.$type = 'circle';
+		  } else {
+// 		    delete elem.data.$alpha;
+		    elem.data.$type = 'none';
 // 		      elem.drawn = true;
 // 		      st.labels.getLabel(elem.id).style.display = 'inline';
-		    }
 		  }
 		  if ( elem.data.leaf ) {
 		    leafs ? leafs += "<li>" + elem.name + "</li>": leafs = "<li>" + elem.name + "</li>";
+		    selectedClade.push(elem);
 // leafs += "<li>" + elem.name + "</li>"
 		  }
 		});
@@ -128,22 +133,38 @@ function init(){
 		if( !node.data.leaf ) {
 // 		  st.labels.getLabel(node.id).innerHTML = '';
 // 		  st.labels.getLabel(node.id).style.display = 'none';
-		  node.data.$alpha = 0.9;
+// 		  node.data.$alpha = 0.9;
 		  node.data.$type = 'circle';
-		  selected.innerHTML = "<ul>" + leafs + "</ul>";
+		  selected.innerHTML = "<ul>" + leafs + "</ul><a href='https://wiki.trin.org.au/System/CharacterGridView?selected'>Get characters</a>";
 		} else {
-		  delete node.data.$alpha ;
+// 		  delete node.data.$alpha ;
 		  node.data.$type = 'none';
-		  selected.innerHTML = "<ul><li>" + node.name + "</li></ul>";
+		  selected.innerHTML = "<ul><li>" + node.name + "</li></ul><a href='https://wiki.trin.org.au/System/CharacterGridView'>Get characters</a>";
 // 		  st.labels.getLabel(node.id).style.display = 'inline';
 		}
 		st.clickedNode = node;
 		st.computePositions(st.graph.getNode(st.root),'');
 		st.plot();
+		function presentClade ( clade ) {
+		  var html = '';
+		  var names = [];
+		  var formattedNames = [];
+		  for( var i = 0; i < clade.length ; i++ ){
+		    var node = clade[i];
+		    formattedNames[i]= node.name;
+		    names[i] = node.name.replace(/ /,'_');
+		    if (node.data.href){
+		      formattedNames[i] = "<a href='"+node.data.href+"'>"+formattedNames[i]+"</a>";
+		    }
+		    formattedNames[i] = "<li>"+formattedNames[i]+"</li>";
+		  }
+		  return "<ul>"+formattedNames.join('')+"</ul><a href='https://wiki.trin.org.au/System/CharacterGridView?selected="+names.join(',')+"'>Get characters</a>";
+		}
+		var loc = parseInt ( pos.style.left.replace(/px/,'') ) + 100;
 		popup.style.display = '';
 		popup.style.top = pos.style.top;
-		popup.style.left = pos.style.left;
-		popupText.innerHTML = selected.innerHTML;
+		popup.style.left =  loc + 'px' ;
+		popupText.innerHTML = presentClade(selectedClade);
 	  }
   // 	      st.refresh();
 // /*	    }*/
@@ -185,7 +206,7 @@ function init(){
 	  };
             //set label styles
             var style = label.style;
-            style.width = 60 + 'px';
+            style.width = 'auto';
             style.height = 17 + 'px';            
             style.cursor = 'pointer';
             style.color = '#333';
@@ -206,7 +227,8 @@ function init(){
 //                 node.data.$color = "#ff7";
             }
             else {
-                delete node.data.$color;
+	      node.data.$color = 'red';
+//                 delete node.data.$color;
                 //if the node belongs to the last plotted level
                 if(!node.anySubnode("exist")) {
                     //count children number
@@ -263,6 +285,24 @@ function init(){
 	  if(node.selected){
 	    dom.style.display = 'none';
 	  }
+	  //             remove labels of non-leaf nodes
+	    if ( !node.data.leaf ){
+	      dom.style.display = 'none';
+	    }
+	    // show label for the last visible node in the clade
+	    if ( !node.data.leaf ) {
+	      var anyChildVisible = true;
+	      node.eachLevel ( 1, 1 , function ( n ) {
+		if ( !n.drawn ){
+		  anyChildVisible = false;
+		}
+	      });
+	      if ( !anyChildVisible ) {
+		dom.style.display = '' ;
+	      } else {
+		dom.style.display = 'none' ;
+	      }
+	    }
 	}
     });
     Nav.load();
@@ -431,7 +471,7 @@ function init(){
 	    st.refresh();
 	  }
 	  var prevElem =  st.labels.getLabel( result[nextStep( pos , -1 * step , len )].id);
-	  prevElem.style.backgroundColor = 'white';
+	  prevElem.style.backgroundColor = '';
 	  jQuery(element).click();
 	}
     };
