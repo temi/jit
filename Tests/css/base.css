@@ -121,3 +121,9 @@ a {
     font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
     padding:7px;
 }
+/* added by temi, white background for canvas */
+canvas {
+/*   background-color:#F4EDE9; */
+/*   background-color:#E4FFAE; */
+background-color:#EEF2F7;
+}
