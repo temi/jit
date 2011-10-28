@@ -204,6 +204,7 @@ $jit.Phylo= (function() {
 	      var n = nodelist[j];
 
 	      var hasChildren = n.anySubnode();
+	      var label = viz.labels.getLabel(n.id);
 	      n.eachLevel(1 , step , function( subn ) {
 		var nodeVisible = show? !subn.exist : subn.exist;
 		if( nodeVisible ) {
@@ -222,7 +223,14 @@ $jit.Phylo= (function() {
 		}*/
 	      });
 	      ( !hasChildren )? n.data.$type = 'none' : show? n.data.$type = 'none' : n.data.$type = 'triangle' ;
-	      ( hasChildren && !show )? viz.labels.getLabel(n.id).innerHTML = n.data.leaves + ' Taxa' : hasChildren ? viz.labels.getLabel(n.id).innerHTML = '' : true;
+	      if( hasChildren && !show ) {
+		label.innerHTML = n.data.leaves + ' Taxa';
+		label.style.display = '';
+	      }	else {
+		  if ( hasChildren ) {
+		    label.style.display = 'none';
+		  }
+	      }
 	      if(!flag) {
 		break;
 	      }
@@ -1494,6 +1502,9 @@ $jit.Phylo.Plot.NodeTypes = new Class({
       this.nodeHelper.circle.render('fill', {x:pos.x, y:pos.y+dim2}, dim2, canvas);
     },
     'contains': function(node, pos) {
+      if ( !node.exist ) { 
+	return false;
+      }
       var dim  = node.getData('dim'),
           npos = this.getAlignedPos(node.pos.getc(true), dim, dim),
           dim2 = dim/2;
@@ -1508,6 +1519,9 @@ $jit.Phylo.Plot.NodeTypes = new Class({
       this.nodeHelper.square.render('fill', {x:pos.x+dim2, y:pos.y+dim2}, dim2, canvas);
     },
     'contains': function(node, pos) {
+      if ( !node.exist ) { 
+	return false;
+      }
       var dim  = node.getData('dim'),
           npos = this.getAlignedPos(node.pos.getc(true), dim, dim),
           dim2 = dim/2;
@@ -1522,6 +1536,9 @@ $jit.Phylo.Plot.NodeTypes = new Class({
       this.nodeHelper.ellipse.render('fill', {x:pos.x+width/2, y:pos.y+height/2}, width, height, canvas);
     },
     'contains': function(node, pos) {
+      if ( !node.exist ) { 
+	return false;
+      }
       var width = node.getData('width'),
           height = node.getData('height'),
           npos = this.getAlignedPos(node.pos.getc(true), width, height);
@@ -1536,6 +1553,9 @@ $jit.Phylo.Plot.NodeTypes = new Class({
       this.nodeHelper.rectangle.render('fill', {x:pos.x+width/2, y:pos.y+height/2}, width, height, canvas);
     },
     'contains': function(node, pos) {
+      if ( !node.exist ) { 
+	return false;
+      }
       var width = node.getData('width'),
           height = node.getData('height'),
           npos = this.getAlignedPos(node.pos.getc(true), width, height);
@@ -1552,6 +1572,9 @@ $jit.Phylo.Plot.NodeTypes = new Class({
 // 	  this.nodeHelper.triangle.render('fill', pos, dim, canvas);
     },
     'contains': function(node, pos) {
+      if ( !node.exist ) { 
+	return false;
+      }
       var width = node.getData('width'),
           height = node.getData('height'),
           dim = node.getData('dim'),
@@ -1625,11 +1648,11 @@ $jit.Phylo.Plot.EdgeTypes = new Class({
 	  ctx.save();
 	  ctx.lineWidth = 2;
 	  ctx.lineCap = 'butt';
-	  ctx.strokeStyle = '#000';
+	  ctx.fillStyle = ctx.strokeStyle = '#ccb';
 // 	  this.edgeHelper.arrow.render( to, new Complex( this.viz.graph.maxXpos , to.y ), 10 , true, canvas);
 // 	  this.edgeHelper.line.render( to, new Complex( this.viz.graph.maxXpos , to.y ),canvas);
 	  ctx.beginPath();
-	  ctx.dashedLine(to.x,to.y,this.viz.graph.maxXpos , to.y , [1, 2, 0, 2]);
+	  ctx.dashedLine(to.x,to.y,this.viz.graph.maxXpos , to.y , [4, 2]);
 	  ctx.closePath();
 	  ctx.stroke();
 // 	  this.edgeHelper.line.render( new Complex( 0 , 0 ), new Complex( 800 , 0 ),canvas);
