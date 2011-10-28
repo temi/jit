@@ -27,15 +27,24 @@ var Log = {
 var Nav = {
   elem: false,
   load: function(){
-    if (!this.elem) 
+    if (!this.elem) {
+       var container = document.getElementById('container');
+       container.innerHTML += '<div id="navigationPanel"><div style="position:relative"><div id="panup" style="position: absolute; left: 13px; top: 4px; width: 18px; height: 18px; cursor: pointer;"><img id="north" src="/Extras/north-mini.png" /></div><div id="panleft" style="position: absolute; left: 4px; top: 22px; width: 18px; height: 18px; cursor: pointer;"><img id="west" src="/Extras/west-mini.png" /></div><div id="panright" style="position: absolute; left: 22px; top: 22px; width: 18px; height: 18px; cursor: pointer;"><img id="east" src="/Extras/east-mini.png" /></div><div id="pandown" style="position: absolute; left: 13px; top: 40px; width: 18px; height: 18px; cursor: pointer;"><img id="south" src="/Extras/south-mini.png" /></div><div id="zoomout" style="position: absolute; left: 13px; top: 99px; width: 18px; height: 18px; cursor: pointer;"><img id="zoomOUT" src="/Extras/zoom-minus-mini.png" /></div><div id="zoomworld" style="position: absolute; left: 13px; top: 81px; width: 18px; height: 18px; cursor: pointer;"><img id="world" style="position: relative; width: 18px; height: 18px;" src="/Extras/zoom-world-mini.png"></div><div id="zoomin" style="position: absolute; left: 13px; top: 63px; width: 18px; height: 18px; cursor: pointer;"><img id="zoomIN" src="/Extras/zoom-plus-mini.png" /></div></div></div>';
       this.elem = document.getElementById('navigationPanel');
-    this.elem.innerHTML = '<div style="position:relative"><div id="panup" style="position: absolute; left: 13px; top: 4px; width: 18px; height: 18px; cursor: pointer;"><img id="north" src="/Extras/north-mini.png" /></div><div id="panleft" style="position: absolute; left: 4px; top: 22px; width: 18px; height: 18px; cursor: pointer;"><img id="west" src="/Extras/west-mini.png" /></div><div id="panright" style="position: absolute; left: 22px; top: 22px; width: 18px; height: 18px; cursor: pointer;"><img id="east" src="/Extras/east-mini.png" /></div><div id="pandown" style="position: absolute; left: 13px; top: 40px; width: 18px; height: 18px; cursor: pointer;"><img id="south" src="/Extras/south-mini.png" /></div><div id="zoomout" style="position: absolute; left: 13px; top: 99px; width: 18px; height: 18px; cursor: pointer;"><img id="zoomOUT" src="/Extras/zoom-minus-mini.png" /></div><div id="zoomworld" style="position: absolute; left: 13px; top: 81px; width: 18px; height: 18px; cursor: pointer;"><img id="world" style="position: relative; width: 18px; height: 18px;" src="/Extras/zoom-world-mini.png"></div><div id="zoomin" style="position: absolute; left: 13px; top: 63px; width: 18px; height: 18px; cursor: pointer;"><img id="zoomIN" src="/Extras/zoom-plus-mini.png" /></div></div>';
+    }
+    
     this.elem.style.left = (800-50) + 'px';
     this.elem.style.position = 'relative';
+    
+    //  this function is losing its meaning by adding this. just for now.
+    var popup = document.getElementById('center-container');
+    var html = '<div id="popup" style="color:black;display:block;border: 1px solid green;background-color:#B5D397;position:absolute;left:50px;top:90px;width:250px;height:170px;overflow:auto;text-align:left"><div id="popup-text"></div><div id="popup-close" style="position:absolute; right:0; top:0;color:#8B4500" onclick="this.parentNode.style.display=\'none\';" onmouseover="this.style.cursor=\'pointer\';"><img src="/Extras/close_icon.gif"/></div></div>';
+    popup.innerHTML += html;
   }
 };
 
 function init(){
+    Nav.load();
     //init data
     var json = Smits.getRoot().json();
     var selectedClade;
@@ -75,7 +84,6 @@ function init(){
             color: '#aaa',
             overridable: true,
             align:'left'
-// 	    autoWidth:true
         },
 	Canvas: {
 		background:{
@@ -305,7 +313,6 @@ function init(){
 	    }
 	}
     });
-    Nav.load();
     //load json data
     st.loadJSON(json);
     //compute node positions and layout
