@@ -13,6 +13,8 @@ $if extras:
     $for lib in extras:
         $if lib == "excanvas.js":
             <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+	$else:
+	  <script language="javascript" type="text/javascript" src="../../Extras/${lib}.js">
 
 <!-- JIT Library File -->
 $if fancy:
