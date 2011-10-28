@@ -161,13 +161,15 @@ Layouts.PhyloJiVE = (function() {
 	});
 	graph.minLen = min;
 	graph.maxLen = max;
-	graph.factor = ( 10 ) / ( graph.maxLen - graph.minLen );
+// 	TODO:need to remove hard coding.the number is the width of the canvas.
+	var constant = ( 600 / graph.depth.length ) * (65 / 100);
+	graph.factor = ( constant ) / ( graph.maxLen - graph.minLen );
     }
     function $design(node, maxsize, y, xpos) {
 	var ymin = Number.MAX_VALUE , ymax= Number.MIN_VALUE ;
 	var subnodeVisible = false;
 // 	factor = ( 100 ) / ( graph.maxLen - graph.minLen );
-	xpos += ( graph.factor * node.data.len );
+	xpos += (10 + graph.factor * node.data.len );
 	node.eachSubnode(function(n){
 	  if(n.exist){
 	    subnodeVisible = true;
